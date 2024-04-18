@@ -1,4 +1,10 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+// require("request").config();
+
 var request = require("request");
+import config from "./apiKey.js";
+const { API_KEY } = config;
 
 let today = new Date();
 
@@ -31,13 +37,25 @@ queryParams +=
 queryParams +=
   "&" + encodeURIComponent("base_date") + "=" + encodeURIComponent(DAY);
 queryParams +=
-  "&" + encodeURIComponent("base_time") + "=" + encodeURIComponent("0500");
-queryParams += "&" + encodeURIComponent("nx") + "=" + encodeURIComponent("35");
-queryParams += "&" + encodeURIComponent("ny") + "=" + encodeURIComponent("128");
-queryParams += "&" + encodeURIComponent("authKey") + "=wUFFWyipQ6CBRVsoqROgzg";
+  "&" + encodeURIComponent("base_time") + "=" + encodeURIComponent("1700");
+queryParams += "&" + encodeURIComponent("nx") + "=" + encodeURIComponent("36");
+queryParams += "&" + encodeURIComponent("ny") + "=" + encodeURIComponent("127");
+queryParams += "&" + encodeURIComponent("authKey") + "=" + `${API_KEY}`;
 
-let contents = "";
+let tempture = [];
+let uuu = [];
+let vvv = [];
+let vec = [];
+let wsd = [];
+let sky = [];
+let pty = [];
+let pop = [];
+let wav = [];
+let pcp = [];
+let reh = [];
+let sno = [];
 
+let i = 0;
 request(
   {
     url: url + queryParams,
@@ -55,10 +73,58 @@ request(
     // console.log(B.response.body.items.item[0].category);
     for (i = 0; i < 240; i++) {
       if (B.response.body.items.item[i].category == "TMP") {
-        console.log(B.response.body.items.item[i].fcstValue);
+        tempture.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "UUU") {
+        uuu.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "VVV") {
+        vvv.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "VEC") {
+        vec.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "WSD") {
+        wsd.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "SKY") {
+        sky.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "PTY") {
+        pty.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "POP") {
+        pop.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "WAV") {
+        wav.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "PCP") {
+        pcp.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "REH") {
+        reh.push(B.response.body.items.item[i].fcstValue);
+      }
+      if (B.response.body.items.item[i].category == "SNO") {
+        sno.push(B.response.body.items.item[i].fcstValue);
       }
     }
+    console.log("1시간 기온: ", tempture);
+    console.log("풍속 (동서): ", uuu);
+    console.log("풍속 (남북): ", vvv);
+    console.log("풍향: ", vec);
+    console.log("풍속: ", wsd);
+    console.log("하늘상태: ", sky);
+    console.log("강수형태: ", pty);
+    console.log("강수확률: ", pop);
+    console.log("파고: ", wav);
+    console.log("1시간 강수량: ", pcp);
+    console.log("습도: ", reh);
+    console.log("1시간 신적설: ", sno);
   }
 );
+
+// 하늘상태 (SKY)코드: 맑음(1), 구름많음(3), 흐림(4)
+// 강수형태 (PTY)코드: 없음(0) 비(1), 비/눈(2), 눈(3), 빗방울(5), 빗방울/눈날림(6), 눈날림(7)
 
 // 01-12
