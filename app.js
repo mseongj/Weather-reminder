@@ -24,7 +24,7 @@ let DAY = `${year}${month}${date}`;
 // &base_time=0500
 // &nx=35
 // &ny=128
-// &authKey=wUFFWyipQ6CBRVsoqROgzg
+// &authKey=urAPIKey
 
 let url =
   "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getVilageFcst";
